@@ -20,6 +20,7 @@ import requests
 # are in each subdirectory.
 import os
 
+
 def walk_through_dir(dir_path):
     """
     Walks through dir_path returning its contents.
@@ -34,6 +35,7 @@ def walk_through_dir(dir_path):
     """
     for dirpath, dirnames, filenames in os.walk(dir_path):
         print(f"There are {len(dirnames)} directories and {len(filenames)} images in '{dirpath}'.")
+
 
 def plot_decision_boundary(model: torch.nn.Module, X: torch.Tensor, y: torch.Tensor):
     """Plots decision boundaries of model predicting on X in comparison to y.
@@ -73,12 +75,12 @@ def plot_decision_boundary(model: torch.nn.Module, X: torch.Tensor, y: torch.Ten
 
 # Plot linear data or training and test and predictions (optional)
 def plot_predictions(
-    train_data, train_labels, test_data, test_labels, predictions=None
+        train_data, train_labels, test_data, test_labels, predictions=None
 ):
     """
   Plots linear training data and test data and compares predictions.
   """
-    plt.figure(figsize=(10, 7))
+    plt.figure(figsize=(5, 3))
 
     # Plot training data in blue
     plt.scatter(train_data, train_labels, c="b", s=4, label="Training data")
@@ -171,11 +173,11 @@ import torchvision
 
 
 def pred_and_plot_image(
-    model: torch.nn.Module,
-    image_path: str,
-    class_names: List[str] = None,
-    transform=None,
-    device: torch.device = "cuda" if torch.cuda.is_available() else "cpu",
+        model: torch.nn.Module,
+        image_path: str,
+        class_names: List[str] = None,
+        transform=None,
+        device: torch.device = "cuda" if torch.cuda.is_available() else "cpu",
 ):
     """Makes a prediction on a target image with a trained model and plots the image.
 
@@ -236,7 +238,8 @@ def pred_and_plot_image(
     plt.title(title)
     plt.axis(False)
 
-def set_seeds(seed: int=42):
+
+def set_seeds(seed: int = 42):
     """Sets random sets for torch operations.
 
     Args:
@@ -247,7 +250,8 @@ def set_seeds(seed: int=42):
     # Set the seed for CUDA torch operations (ones that happen on the GPU)
     torch.cuda.manual_seed(seed)
 
-def download_data(source: str, 
+
+def download_data(source: str,
                   destination: str,
                   remove_source: bool = True) -> Path:
     """Downloads a zipped dataset from source and unzips to destination.
@@ -274,7 +278,7 @@ def download_data(source: str,
     else:
         print(f"[INFO] Did not find {image_path} directory, creating one...")
         image_path.mkdir(parents=True, exist_ok=True)
-        
+
         # Download pizza, steak, sushi data
         target_file = Path(source).name
         with open(data_path / target_file, "wb") as f:
@@ -284,11 +288,11 @@ def download_data(source: str,
 
         # Unzip pizza, steak, sushi data
         with zipfile.ZipFile(data_path / target_file, "r") as zip_ref:
-            print(f"[INFO] Unzipping {target_file} data...") 
+            print(f"[INFO] Unzipping {target_file} data...")
             zip_ref.extractall(image_path)
 
         # Remove .zip file
         if remove_source:
             os.remove(data_path / target_file)
-    
+
     return image_path
